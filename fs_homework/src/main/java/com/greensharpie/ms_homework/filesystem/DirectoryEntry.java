@@ -1,5 +1,7 @@
 package com.greensharpie.ms_homework.filesystem;
 
+import java.util.Objects;
+
 public abstract class DirectoryEntry {
     private String name;
 
@@ -19,5 +21,23 @@ public abstract class DirectoryEntry {
     @Override
     public String toString() {
         return "DirectoryEntry [name=" + name + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof DirectoryEntry)) {
+            return false;
+        }
+
+        return this.name == ((DirectoryEntry)o).name;
     }
 }

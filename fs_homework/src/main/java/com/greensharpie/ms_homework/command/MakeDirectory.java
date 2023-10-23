@@ -19,6 +19,8 @@ public class MakeDirectory {
     public void exec(SystemData system) {
         Directory cwd = system.getCwd();
         Directory newDir = EntryFactory.createDirectory(newDirName, cwd);
-        cwd.getContents().add(newDir);
+        if (!cwd.getContents().add(newDir)) {
+            System.out.println("Directory already contains item named: " + newDirName);
+        }
     }
 }
