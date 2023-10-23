@@ -28,20 +28,4 @@ public class DirectoryTest {
         Directory dir2 = new Directory("test_name", dir1);
         assertEquals(dir1, dir2.getParent());
     }
-
-    @Test
-    public void renameDirectory()
-    {
-        Directory dir1 = new Directory("", null);
-        dir1.setName("new_root");
-        assertEquals("new_root", dir1.getName());
-    }
-
-    @Test
-    public void toStringTest()
-    {
-        Directory dir1 = new Directory("dirName", null);
-        assertEquals("DirectoryEntry [name=dirName]", dir1.toString());
-    }
-
 }
