@@ -44,17 +44,13 @@ public class ListContentsTest {
     }
 
     @Test
-    public void disallowSameNamesMakeDir()
+    public void oneDirList()
     {
         SystemData system_data = new SystemData();
         Directory root_dir = system_data.getCwd();
-
         new MakeDirectory("new_directory").exec(system_data);
+        new ListContents().exec(system_data);
 
-        assertEquals(1, root_dir.getContents().size());
-
-        new MakeDirectory("new_directory").exec(system_data);
-
-        assertEquals(1, root_dir.getContents().size());
+        assertEquals("new_directory", outputStreamCaptor.toString().trim());
     }
 }
