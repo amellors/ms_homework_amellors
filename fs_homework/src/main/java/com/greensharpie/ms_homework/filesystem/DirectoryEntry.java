@@ -2,7 +2,8 @@ package com.greensharpie.ms_homework.filesystem;
 
 import java.util.Objects;
 
-public abstract class DirectoryEntry {
+public class DirectoryEntry {
+
     private String name;
 
     protected DirectoryEntry() {}
