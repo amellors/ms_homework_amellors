@@ -7,10 +7,10 @@ public class Directory extends DirectoryEntry {
     private Directory parent;
     private Set<DirectoryEntry> contents;
 
-    private Directory() {}
+    private Directory() { }
 
-    public Directory(String name, Directory newParent) {
-        setName(name);
+    protected Directory(String name, Directory newParent) {
+        super(name);
         this.parent = newParent;
         this.contents = new LinkedHashSet<DirectoryEntry>();
     }

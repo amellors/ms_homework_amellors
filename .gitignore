@@ -1,5 +1,5 @@
 # Compiled class file
-*.class
+target
 
 # Log file
 *.log
@@ -30,3 +30,6 @@ replay_pid*
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Nano swap file
+*.swp
