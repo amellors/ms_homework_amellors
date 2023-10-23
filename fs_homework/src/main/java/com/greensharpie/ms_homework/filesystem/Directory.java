@@ -19,7 +19,7 @@ public class Directory extends DirectoryEntry {
         return contents;
     }
 
-    public DirectoryEntry getParent() {
+    public Directory getParent() {
         return parent;
     }
     public void setParent(Directory parent) {
