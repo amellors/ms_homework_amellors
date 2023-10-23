@@ -5,10 +5,9 @@ import com.greensharpie.ms_homework.filesystem.EntryFactory;
 
 public class SystemData {
     private Directory cwd;
-    private Directory root;
 
     public SystemData() {
-        root = cwd = EntryFactory.createDirectory("", null);
+        cwd = EntryFactory.createDirectory("", null);
     }
 
     public void setCwd(Directory newDir) {

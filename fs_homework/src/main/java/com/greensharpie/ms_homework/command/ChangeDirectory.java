@@ -9,9 +9,6 @@ public class ChangeDirectory {
 
     private String chdirName;
 
-    // No Default const as we need inputs
-    private ChangeDirectory() { }
-
     public ChangeDirectory(String chdirName) {
         this.chdirName = chdirName;
     } 
