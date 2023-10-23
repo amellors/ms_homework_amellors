@@ -15,6 +15,7 @@ public class App
     public static void main( String[] args )
     {
         new MakeDirectory("school").exec(system_data);
+        new MakeDirectory("school").exec(system_data);
         new ListContents().exec(system_data);
     }
 
