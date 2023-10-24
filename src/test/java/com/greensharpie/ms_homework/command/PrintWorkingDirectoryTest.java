@@ -8,7 +8,6 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.greensharpie.ms_homework.filesystem.Directory;
 import com.greensharpie.ms_homework.system.SystemData;
 
 public class PrintWorkingDirectoryTest {

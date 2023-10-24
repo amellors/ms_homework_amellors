@@ -9,9 +9,6 @@ public class RemoveDirectory {
 
     private String rmdirName;
 
-    // No Default const as we need inputs
-    private RemoveDirectory() { }
-
     public RemoveDirectory(String rmdirName) {
         this.rmdirName = rmdirName;
     } 

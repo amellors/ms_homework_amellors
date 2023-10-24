@@ -8,7 +8,6 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.greensharpie.ms_homework.filesystem.Directory;
 import com.greensharpie.ms_homework.system.SystemData;
 
 public class ListContentsTest {
@@ -47,7 +46,6 @@ public class ListContentsTest {
     public void oneDirList()
     {
         SystemData system_data = new SystemData();
-        Directory root_dir = system_data.getCwd();
         new MakeDirectory("new_directory").exec(system_data);
         new ListContents().exec(system_data);
 

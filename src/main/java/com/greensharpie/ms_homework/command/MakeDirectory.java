@@ -9,9 +9,6 @@ public class MakeDirectory {
 
     private String newDirName;
 
-    // No Default const as we need inputs
-    private MakeDirectory() { }
-
     public MakeDirectory(String newDirName) {
         this.newDirName = newDirName;
     } 
