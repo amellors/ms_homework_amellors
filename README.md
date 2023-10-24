@@ -25,3 +25,4 @@ Ideas I wanted/did implement beyond the scope of the initial requirements:
 - [ ] REPL like interface to interact with filesystem
 - [ ] Pushd & Popd
 - [ ] Move & Copy
+- [ ] Exceptions instead of logs to console for issues
