@@ -6,7 +6,7 @@
 
   <groupId>com.greensharpie.ms_homework</groupId>
   <artifactId>fs_homework</artifactId>
-  <version>0.1</version>
+  <version>0.2</version>
 
   <name>fs_homework</name>
   <url>http://www.greensharpie.com</url>
@@ -56,6 +56,13 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+          <archive>
+            <manifest>
+              <mainClass>com.greensharpie.ms_homework.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
