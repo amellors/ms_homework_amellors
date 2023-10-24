@@ -16,7 +16,7 @@ mvn package
 ### Running
 Run the .jar that is built:
 ```bash 
-java --jar target/fs_homework-0.2.jar
+java -jar target/fs_homework-0.2.jar
 ```
 
 ## Design thoughts and wishes
