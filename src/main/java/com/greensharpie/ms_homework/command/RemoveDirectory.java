@@ -15,14 +15,13 @@ public class RemoveDirectory {
 
     public void exec(SystemData system) {
         Directory cwd = system.getCwd();
-        for (DirectoryEntry possibleDirectory: cwd.getContents()) {
-            if (possibleDirectory.getName().equals(rmdirName) &&
-                possibleDirectory instanceof Directory) {
-                    cwd.getContents().remove(possibleDirectory);
-                    return;
-                }
+        
+        DirectoryEntry entry = cwd.getEntry(rmdirName);
+        if (entry != null && entry instanceof Directory) {
+            cwd.getContents().remove(entry);
         }
-
-        System.out.println("Could not find directory with name: " + rmdirName);
+        else {
+            System.out.println("Could not find directory with name: " + rmdirName);
+        }
     }    
 }

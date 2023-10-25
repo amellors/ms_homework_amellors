@@ -25,14 +25,12 @@ public class ChangeDirectory {
             return;
         }
 
-        for (DirectoryEntry possibleDirectory: cwd.getContents()) {
-            if (possibleDirectory.getName().equals(chdirName) &&
-                possibleDirectory instanceof Directory) {
-                    system.setCwd((Directory)possibleDirectory);
-                    return;
-                }
+        DirectoryEntry entry = cwd.getEntry(chdirName);
+        if (entry != null && entry instanceof Directory) {
+            system.setCwd((Directory)entry);
         }
-
-        System.out.println("Could not find directory with name: " + chdirName);
+        else {
+            System.out.println("Could not find directory with name: " + chdirName);
+        }
     }    
 }

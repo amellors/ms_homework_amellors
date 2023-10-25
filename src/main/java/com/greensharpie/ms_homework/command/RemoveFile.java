@@ -16,14 +16,13 @@ public class RemoveFile {
 
     public void exec(SystemData system) {
         Directory cwd = system.getCwd();
-        for (DirectoryEntry possibleDirectory: cwd.getContents()) {
-            if (possibleDirectory.getName().equals(filename))
-                if (possibleDirectory instanceof File) {
-                    cwd.getContents().remove(possibleDirectory);
-                    return;
-                }
-        }
 
-        System.out.println("Could not find file with name: " + filename);
+        DirectoryEntry entry = cwd.getEntry(filename);
+        if (entry != null && entry instanceof File) {
+            cwd.getContents().remove(entry);
+        }
+        else {
+            System.out.println("Could not find file with name: " + filename);
+        }
     }      
 }
