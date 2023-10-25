@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.greensharpie.ms_homework.system.SystemData;
 
 public class RenameFileTest {
-private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @BeforeEach
     public void setUp() {
