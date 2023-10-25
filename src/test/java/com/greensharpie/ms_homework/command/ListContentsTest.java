@@ -51,4 +51,22 @@ public class ListContentsTest {
 
         assertEquals("new_directory", outputStreamCaptor.toString().trim());
     }
+
+    @Test
+    public void listEntries()
+    {
+        SystemData system_data = new SystemData();
+        String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
+        for (String name: dirNames) {
+            new MakeDirectory(name).exec(system_data);
+        }
+        String[] fileNames = {"newFile1", "newFile2", "newFile3", "newFile4"};
+        for (String name: fileNames) {
+            new TouchFile(name).exec(system_data);
+        }
+
+        new ListContents().exec(system_data);
+
+        assertEquals("newDir1, newDir2, newDir3, newDir4, newFile1, newFile2, newFile3, newFile4", outputStreamCaptor.toString().trim());
+    }
 }
