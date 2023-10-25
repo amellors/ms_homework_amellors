@@ -1,5 +1,8 @@
 package com.greensharpie.ms_homework.command;
 
+import com.greensharpie.ms_homework.filesystem.Directory;
+import com.greensharpie.ms_homework.filesystem.DirectoryEntry;
+import com.greensharpie.ms_homework.filesystem.File;
 import com.greensharpie.ms_homework.system.SystemData;
 
 public class RemoveFile {
@@ -12,6 +15,15 @@ public class RemoveFile {
     } 
 
     public void exec(SystemData system) {
-        System.out.println("NYI");
-    }    
+        Directory cwd = system.getCwd();
+        for (DirectoryEntry possibleDirectory: cwd.getContents()) {
+            if (possibleDirectory.getName().equals(filename))
+                if (possibleDirectory instanceof File) {
+                    cwd.getContents().remove(possibleDirectory);
+                    return;
+                }
+        }
+
+        System.out.println("Could not find file with name: " + filename);
+    }      
 }
