@@ -1,6 +1,11 @@
 package com.greensharpie.ms_homework.command;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.nio.file.FileAlreadyExistsException;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +18,9 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        new TouchFile("new_file").exec(system_data);
+        assertDoesNotThrow(() -> {
+            new TouchFile("new_file").exec(system_data);
+        });
 
         assertEquals(1, system_data.getCwd().getContents().size());
     }
@@ -23,11 +30,13 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        String[] dirNames = {"newFile1", "newFile2", "newFile3", "newDir4newFile4"};
+        String[] dirNames = {"newFile1", "newFile2", "newFile3", "newFile4"};
 
-        for (String name: dirNames) {
-            new TouchFile(name).exec(system_data);
-        }
+        assertDoesNotThrow(() -> {
+            for (String name: dirNames) {
+                new TouchFile(name).exec(system_data);
+            }
+        });
 
         assertEquals(dirNames.length, system_data.getCwd().getContents().size());
     }
@@ -37,11 +46,14 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        new TouchFile("new_file").exec(system_data);
+        Exception exception = assertThrows(FileAlreadyExistsException.class, () -> {
+            new TouchFile("new_file").exec(system_data);
+            assertEquals(1, system_data.getCwd().getContents().size());
 
-        assertEquals(1, system_data.getCwd().getContents().size());
-
-        new TouchFile("new_file").exec(system_data);
+        
+            new TouchFile("new_file").exec(system_data);
+        });    
+        assertTrue(exception.getMessage().contains("Directory already contains item named:"));
 
         assertEquals(1, system_data.getCwd().getContents().size());
     }
@@ -51,14 +63,16 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        new TouchFile("new_file").exec(system_data);
-        new MakeDirectory("dir1").exec(system_data);
+        assertDoesNotThrow(() -> {
+            new TouchFile("new_file").exec(system_data);
+            new MakeDirectory("dir1").exec(system_data);
 
-        assertEquals(2, system_data.getCwd().getContents().size());
+            assertEquals(2, system_data.getCwd().getContents().size());
 
-        new ChangeDirectory("dir1").exec(system_data);
-        new TouchFile("new_file").exec(system_data);
+            new ChangeDirectory("dir1").exec(system_data);
+            new TouchFile("new_file").exec(system_data);
 
-        assertEquals(1, system_data.getCwd().getContents().size());
+            assertEquals(1, system_data.getCwd().getContents().size());
+        });
     }    
 }

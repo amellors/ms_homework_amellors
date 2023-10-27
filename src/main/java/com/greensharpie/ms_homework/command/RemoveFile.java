@@ -1,5 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
+import java.io.FileNotFoundException;
+
 import com.greensharpie.ms_homework.filesystem.Directory;
 import com.greensharpie.ms_homework.filesystem.DirectoryEntry;
 import com.greensharpie.ms_homework.filesystem.File;
@@ -14,7 +16,7 @@ public class RemoveFile {
         this.filename = filename;
     } 
 
-    public void exec(SystemData system) {
+    public void exec(SystemData system) throws FileNotFoundException {
         Directory cwd = system.getCwd();
 
         DirectoryEntry entry = cwd.getEntry(filename);
@@ -22,7 +24,8 @@ public class RemoveFile {
             cwd.getContents().remove(entry);
         }
         else {
-            System.out.println("Could not find file with name: " + filename);
+
+            throw new FileNotFoundException("Could not find file with name: " + filename);
         }
     }      
 }

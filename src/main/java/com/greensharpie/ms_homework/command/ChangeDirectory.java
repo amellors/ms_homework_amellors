@@ -17,7 +17,6 @@ public class ChangeDirectory {
         Directory cwd = system.getCwd();
         if (chdirName.equals("..")) {
             if (cwd.getParent() == null) {
-                System.out.println("Already at root");
                 return;
             }
 

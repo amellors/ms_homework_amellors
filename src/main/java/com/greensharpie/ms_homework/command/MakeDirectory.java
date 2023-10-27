@@ -1,5 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
+import java.nio.file.FileAlreadyExistsException;
+
 import com.greensharpie.ms_homework.filesystem.Directory;
 import com.greensharpie.ms_homework.filesystem.EntryFactory;
 import com.greensharpie.ms_homework.system.SystemData;
@@ -13,11 +15,11 @@ public class MakeDirectory {
         this.newDirName = newDirName;
     } 
 
-    public void exec(SystemData system) {
+    public void exec(SystemData system) throws FileAlreadyExistsException {
         Directory cwd = system.getCwd();
         Directory newDir = EntryFactory.createDirectory(newDirName, cwd);
         if (!cwd.getContents().add(newDir)) {
-            System.out.println("Directory already contains item named: " + newDirName);
+            throw new FileAlreadyExistsException("Directory already contains item named: " + newDirName);
         }
     }
 }
