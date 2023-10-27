@@ -33,3 +33,6 @@ Ideas I wanted/did implement beyond the scope of the initial requirements:
 - [ ] Move & Copy
 - [ ] Exceptions instead of logs to console for issues
 - [X] Recursive Find
+
+Notes:
+* I need to learn more about how to Mock items in Java, having to use other parts of the system to build the mocks made some refactors a bit bigger than needed. (I'm looking at the Exceptions changes)
