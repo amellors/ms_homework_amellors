@@ -12,4 +12,9 @@ public class EntryFactory {
         File newFile = new File(filename);
         return newFile;
     }
+    
+    static public File createFileWithContents(String filename, String contents) {
+        File newFile = new File(filename, contents);
+        return newFile;
+    }
 }
