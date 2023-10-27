@@ -7,4 +7,9 @@ public class EntryFactory {
         Directory newDir = new Directory(dirName, parentDir);
         return newDir;
     }
+
+    static public File createFile(String filename) {
+        File newFile = new File(filename);
+        return newFile;
+    }
 }

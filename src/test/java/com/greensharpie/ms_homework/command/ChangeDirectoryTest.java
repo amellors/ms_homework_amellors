@@ -40,6 +40,16 @@ public class ChangeDirectoryTest {
     }
 
     @Test
+    public void cannotChangeDirectoryToFile()
+    {
+        SystemData system_data = new SystemData();
+        new TouchFile("old_file").exec(system_data);
+        new ChangeDirectory("old_file").exec(system_data);
+
+        assertEquals("Could not find directory with name: old_file", outputStreamCaptor.toString().trim());
+    }
+
+    @Test
     public void oneDirChange()
     {
         SystemData system_data = new SystemData();

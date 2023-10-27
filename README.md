@@ -19,9 +19,16 @@ Run the .jar that is built:
 java -jar target/fs_homework-0.2.jar
 ```
 
+### Coverage Report
+To run the coverage report:
+```bash
+mvn jacoco:prepare-agent test install jacoco:report
+```
+
 ## Design thoughts and wishes
 
 Ideas I wanted/did implement beyond the scope of the initial requirements:
 - [ ] REPL like interface to interact with filesystem
 - [ ] Pushd & Popd
 - [ ] Move & Copy
+- [ ] Exceptions instead of logs to console for issues
