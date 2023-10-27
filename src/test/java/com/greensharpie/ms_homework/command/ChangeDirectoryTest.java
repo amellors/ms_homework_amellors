@@ -1,6 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -24,9 +25,10 @@ public class ChangeDirectoryTest {
     {
         SystemData system_data = new SystemData();
 
+        Directory root = system_data.getCwd();
         new ChangeDirectory("..").exec(system_data);
 
-        assertEquals("Already at root", outputStreamCaptor.toString().trim());
+        assertEquals(root, system_data.getCwd());
     }
 
     @Test
@@ -43,7 +45,12 @@ public class ChangeDirectoryTest {
     public void cannotChangeDirectoryToFile()
     {
         SystemData system_data = new SystemData();
-        new TouchFile("old_file").exec(system_data);
+        try {
+            new TouchFile("old_file").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
         new ChangeDirectory("old_file").exec(system_data);
 
         assertEquals("Could not find directory with name: old_file", outputStreamCaptor.toString().trim());
@@ -53,8 +60,13 @@ public class ChangeDirectoryTest {
     public void oneDirChange()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("new_directory").exec(system_data);
-        new ChangeDirectory("new_directory").exec(system_data);
+        try {
+            new MakeDirectory("new_directory").exec(system_data);
+            new ChangeDirectory("new_directory").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         Directory cwd = system_data.getCwd();
         assertEquals("new_directory", cwd.getName());
@@ -64,11 +76,15 @@ public class ChangeDirectoryTest {
     public void twoDirChange()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("new_directory").exec(system_data);
-        new ChangeDirectory("new_directory").exec(system_data);
-        new MakeDirectory("another_new_directory").exec(system_data);
-        new ChangeDirectory("another_new_directory").exec(system_data);
-
+        try {
+            new MakeDirectory("new_directory").exec(system_data);
+            new ChangeDirectory("new_directory").exec(system_data);
+            new MakeDirectory("another_new_directory").exec(system_data);
+            new ChangeDirectory("another_new_directory").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
         Directory cwd = system_data.getCwd();
         assertEquals("another_new_directory", cwd.getName());
     }
@@ -77,11 +93,16 @@ public class ChangeDirectoryTest {
     public void multipleDirChanges()
     {
         SystemData system_data = new SystemData();
-        String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-        for (String name: dirNames) {
-            new MakeDirectory(name).exec(system_data);
+        try {
+            String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
+            for (String name: dirNames) {
+                new MakeDirectory(name).exec(system_data);
+            }
+            new ChangeDirectory("newDir1").exec(system_data);
         }
-        new ChangeDirectory("newDir1").exec(system_data);
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
         Directory cwd = system_data.getCwd();
         assertEquals("newDir1", cwd.getName());
 
@@ -96,12 +117,16 @@ public class ChangeDirectoryTest {
     public void goUpOneDirectory()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("new_directory").exec(system_data);
-        new ChangeDirectory("new_directory").exec(system_data);
-        new MakeDirectory("another_new_directory").exec(system_data);
-        new ChangeDirectory("another_new_directory").exec(system_data);
-        new ChangeDirectory("..").exec(system_data);
-
+        try {
+            new MakeDirectory("new_directory").exec(system_data);
+            new ChangeDirectory("new_directory").exec(system_data);
+            new MakeDirectory("another_new_directory").exec(system_data);
+            new ChangeDirectory("another_new_directory").exec(system_data);
+            new ChangeDirectory("..").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
         Directory cwd = system_data.getCwd();
         assertEquals("new_directory", cwd.getName());
     }

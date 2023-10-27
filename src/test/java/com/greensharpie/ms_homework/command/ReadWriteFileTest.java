@@ -1,6 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -36,9 +37,14 @@ public class ReadWriteFileTest {
     public void simpleReadWrite()
     {
         SystemData system_data = new SystemData();
-        new TouchFile("file").exec(system_data);
-        new WriteFile("file", "Contents of file").exec(system_data);
-        new ReadFile("file").exec(system_data);
+        try {
+            new TouchFile("file").exec(system_data);
+            new WriteFile("file", "Contents of file").exec(system_data);
+            new ReadFile("file").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Contents of file", outputStreamCaptor.toString().trim());
     }
@@ -47,8 +53,13 @@ public class ReadWriteFileTest {
     public void cannotReadFromDirectory()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("dir").exec(system_data);
-        new ReadFile("dir").exec(system_data);
+        try {
+            new MakeDirectory("dir").exec(system_data);
+            new ReadFile("dir").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Could not find a file with name: dir", outputStreamCaptor.toString().trim());
     }
@@ -57,8 +68,13 @@ public class ReadWriteFileTest {
     public void cannotWriteToDirectory()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("dir").exec(system_data);
-        new WriteFile("dir", "Contents don't matter").exec(system_data);
+        try {
+            new MakeDirectory("dir").exec(system_data);
+            new WriteFile("dir", "Contents don't matter").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Could not find a file with name: dir", outputStreamCaptor.toString().trim());
     }

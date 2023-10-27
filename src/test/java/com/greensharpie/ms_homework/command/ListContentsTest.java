@@ -1,6 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -33,8 +34,13 @@ public class ListContentsTest {
     {
         SystemData system_data = new SystemData();
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-        for (String name: dirNames) {
-            new MakeDirectory(name).exec(system_data);
+        try {
+            for (String name: dirNames) {
+                new MakeDirectory(name).exec(system_data);
+            }
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
         }
 
         new ListContents().exec(system_data);
@@ -46,8 +52,13 @@ public class ListContentsTest {
     public void oneDirList()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("new_directory").exec(system_data);
-        new ListContents().exec(system_data);
+        try {
+            new MakeDirectory("new_directory").exec(system_data);
+            new ListContents().exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("new_directory", outputStreamCaptor.toString().trim());
     }
@@ -57,12 +68,17 @@ public class ListContentsTest {
     {
         SystemData system_data = new SystemData();
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-        for (String name: dirNames) {
-            new MakeDirectory(name).exec(system_data);
+        try {
+            for (String name: dirNames) {
+                new MakeDirectory(name).exec(system_data);
+            }
+            String[] fileNames = {"newFile1", "newFile2", "newFile3", "newFile4"};
+            for (String name: fileNames) {
+                new TouchFile(name).exec(system_data);
+            }
         }
-        String[] fileNames = {"newFile1", "newFile2", "newFile3", "newFile4"};
-        for (String name: fileNames) {
-            new TouchFile(name).exec(system_data);
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
         }
 
         new ListContents().exec(system_data);

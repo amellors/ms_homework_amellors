@@ -1,6 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -23,9 +24,14 @@ public class RemoveDirectoryTest {
     public void rmDirTest()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("new_directory").exec(system_data);
-        new MakeDirectory("new_directory2").exec(system_data);
-        new RemoveDirectory("new_directory").exec(system_data);
+        try {
+            new MakeDirectory("new_directory").exec(system_data);
+            new MakeDirectory("new_directory2").exec(system_data);
+            new RemoveDirectory("new_directory").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
         Directory cwd = system_data.getCwd();
         
         assertEquals(1, cwd.getContents().size());

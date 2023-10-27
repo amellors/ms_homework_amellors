@@ -1,6 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -23,10 +24,15 @@ public class RemoveFileTest {
     public void rmDirTest()
     {
         SystemData system_data = new SystemData();
-        new MakeDirectory("new_directory").exec(system_data);
-        new TouchFile("new_file").exec(system_data);
-        new TouchFile("new_file2").exec(system_data);
-        new RemoveFile("new_file").exec(system_data);
+        try {
+            new MakeDirectory("new_directory").exec(system_data);
+            new TouchFile("new_file").exec(system_data);
+            new TouchFile("new_file2").exec(system_data);
+            new RemoveFile("new_file").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
         Directory cwd = system_data.getCwd();
         
         assertEquals(2, cwd.getContents().size());
@@ -37,8 +43,13 @@ public class RemoveFileTest {
     {
         SystemData system_data = new SystemData();
 
-        new MakeDirectory("new_directory").exec(system_data);
-        new RemoveFile("new_directory").exec(system_data);
+        try {
+            new MakeDirectory("new_directory").exec(system_data);
+            new RemoveFile("new_directory").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Could not find file with name: new_directory", outputStreamCaptor.toString().trim());
     }
