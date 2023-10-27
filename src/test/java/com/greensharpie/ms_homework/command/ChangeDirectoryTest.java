@@ -47,9 +47,8 @@ public class ChangeDirectoryTest {
         SystemData system_data = new SystemData();
         assertDoesNotThrow(() -> {
             new TouchFile("old_file").exec(system_data);
+            new ChangeDirectory("old_file").exec(system_data);
         });
-        
-        new ChangeDirectory("old_file").exec(system_data);
 
         assertEquals("Could not find directory with name: old_file", outputStreamCaptor.toString().trim());
     }
@@ -77,6 +76,7 @@ public class ChangeDirectoryTest {
             new MakeDirectory("another_new_directory").exec(system_data);
             new ChangeDirectory("another_new_directory").exec(system_data);
         });
+
         Directory cwd = system_data.getCwd();
         assertEquals("another_new_directory", cwd.getName());
     }
@@ -92,12 +92,14 @@ public class ChangeDirectoryTest {
             }
             new ChangeDirectory("newDir1").exec(system_data);
         });
+
         Directory cwd = system_data.getCwd();
         assertEquals("newDir1", cwd.getName());
+        assertDoesNotThrow(() -> {
+            new ChangeDirectory("..").exec(system_data);
+            new ChangeDirectory("newDir3").exec(system_data);
+        });
 
-
-        new ChangeDirectory("..").exec(system_data);
-        new ChangeDirectory("newDir3").exec(system_data);
         cwd = system_data.getCwd();
         assertEquals("newDir3", cwd.getName());
     }
@@ -113,6 +115,7 @@ public class ChangeDirectoryTest {
             new ChangeDirectory("another_new_directory").exec(system_data);
             new ChangeDirectory("..").exec(system_data);
         });
+        
         Directory cwd = system_data.getCwd();
         assertEquals("new_directory", cwd.getName());
     }

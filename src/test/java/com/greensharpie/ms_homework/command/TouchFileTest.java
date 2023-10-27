@@ -46,13 +46,13 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        assertDoesNotThrow(() -> {
+        Exception exception = assertThrows(FileAlreadyExistsException.class, () -> {
             new TouchFile("new_file").exec(system_data);
-        });
-        assertEquals(1, system_data.getCwd().getContents().size());
+            assertEquals(1, system_data.getCwd().getContents().size());
 
-        Exception exception = assertThrows(FileAlreadyExistsException.class, () ->
-            new TouchFile("new_file").exec(system_data));
+        
+            new TouchFile("new_file").exec(system_data);
+        });    
         assertTrue(exception.getMessage().contains("Directory already contains item named:"));
 
         assertEquals(1, system_data.getCwd().getContents().size());

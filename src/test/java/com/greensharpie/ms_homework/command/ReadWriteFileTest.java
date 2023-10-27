@@ -49,12 +49,10 @@ public class ReadWriteFileTest {
     public void cannotReadFromDirectory()
     {
         SystemData system_data = new SystemData();
-        assertDoesNotThrow(() -> {
+        Exception exception = assertThrows(FileNotFoundException.class, () -> {
             new MakeDirectory("dir").exec(system_data);
+            new ReadFile("dir").exec(system_data);
         });
-
-        Exception exception = assertThrows(FileNotFoundException.class, () ->
-            new ReadFile("dir").exec(system_data));
         assertTrue(exception.getMessage().contains("Could not find a file with name:"));
     }
     
@@ -62,11 +60,10 @@ public class ReadWriteFileTest {
     public void cannotWriteToDirectory()
     {
         SystemData system_data = new SystemData();
-        assertDoesNotThrow(() -> {
+        Exception exception = assertThrows(FileNotFoundException.class, () -> {
             new MakeDirectory("dir").exec(system_data);
+            new WriteFile("dir", "Contents don't matter").exec(system_data);
         });
-        Exception exception = assertThrows(FileNotFoundException.class, () ->
-            new WriteFile("dir", "Contents don't matter").exec(system_data));
         assertTrue(exception.getMessage().contains("Could not find a file with name:"));
     }
 }

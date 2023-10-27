@@ -33,13 +33,13 @@ public class ListContentsTest {
     public void listMultipleDirs()
     {
         SystemData system_data = new SystemData();
-        String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
         assertDoesNotThrow(() -> {
+            String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
+            new ListContents().exec(system_data);
         });
-        new ListContents().exec(system_data);
 
         assertEquals("newDir1, newDir2, newDir3, newDir4", outputStreamCaptor.toString().trim());
     }
@@ -60,8 +60,8 @@ public class ListContentsTest {
     public void listEntries()
     {
         SystemData system_data = new SystemData();
-        String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
         assertDoesNotThrow(() -> {
+            String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};    
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
@@ -69,9 +69,8 @@ public class ListContentsTest {
             for (String name: fileNames) {
                 new TouchFile(name).exec(system_data);
             }
+            new ListContents().exec(system_data);
         });
-
-        new ListContents().exec(system_data);
 
         assertEquals("newDir1, newDir2, newDir3, newDir4, newFile1, newFile2, newFile3, newFile4", outputStreamCaptor.toString().trim());
     }

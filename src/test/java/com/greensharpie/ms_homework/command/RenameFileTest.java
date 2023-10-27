@@ -44,14 +44,13 @@ public class RenameFileTest {
 
         String[] dirNames = {"newFile1", "newFile2", "newFile3", "newFile4"};
 
-        assertDoesNotThrow(() -> {
+        Exception exception = assertThrows(FileAlreadyExistsException.class, () -> {
             for (String name: dirNames) {
                 new TouchFile(name).exec(system_data);
             }
-        });
         
-        Exception exception = assertThrows(FileAlreadyExistsException.class, () ->
-            new RenameFile("newFile1", "newFile2").exec(system_data));
+            new RenameFile("newFile1", "newFile2").exec(system_data);
+        });
         assertTrue(exception.getMessage().contains("Directory already contains item named:"));
     }
 

@@ -34,7 +34,6 @@ public class MakeDirectoryTest {
         Directory root_dir = system_data.getCwd();
 
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-
         assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
@@ -50,14 +49,13 @@ public class MakeDirectoryTest {
         SystemData system_data = new SystemData();
         Directory root_dir = system_data.getCwd();
 
-        assertDoesNotThrow(() -> {
+        Exception exception = assertThrows(FileAlreadyExistsException.class, () -> {
+            new MakeDirectory("new_directory").exec(system_data);
+            assertEquals(1, root_dir.getContents().size());
+
             new MakeDirectory("new_directory").exec(system_data);
         });
 
-        assertEquals(1, root_dir.getContents().size());
-
-        Exception exception = assertThrows(FileAlreadyExistsException.class, () ->
-            new MakeDirectory("new_directory").exec(system_data));
         assertTrue(exception.getMessage().contains("Directory already contains item named:"));
         assertEquals(1, root_dir.getContents().size());
     }

@@ -36,9 +36,8 @@ public class FindTest {
         SystemData system_data = new SystemData();
         assertDoesNotThrow(() -> {
             new MakeDirectory("newDir").exec(system_data);
+            new Find("newDir").exec(system_data);
         });
-        new Find("newDir").exec(system_data);
-        
 
         assertEquals("Found a Directory with name newDir", outputStreamCaptor.toString().trim());
     }

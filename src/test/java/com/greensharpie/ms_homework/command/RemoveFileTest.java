@@ -43,12 +43,10 @@ public class RemoveFileTest {
     {
         SystemData system_data = new SystemData();
 
-        assertDoesNotThrow(() -> {
+        Exception exception = assertThrows(FileNotFoundException.class, () -> {
             new MakeDirectory("new_directory").exec(system_data);
+            new RemoveFile("new_directory").exec(system_data);
         });
-
-        Exception exception = assertThrows(FileNotFoundException.class, () ->
-            new RemoveFile("new_directory").exec(system_data));
         assertTrue(exception.getMessage().contains("Could not find file with name:"));
     }
 
