@@ -1,7 +1,6 @@
 package com.greensharpie.ms_homework.command;
 
 import java.io.FileNotFoundException;
-import java.nio.file.FileAlreadyExistsException;
 
 import com.greensharpie.ms_homework.filesystem.Directory;
 import com.greensharpie.ms_homework.filesystem.DirectoryEntry;
