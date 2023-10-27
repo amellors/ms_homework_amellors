@@ -6,25 +6,39 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.nio.file.FileAlreadyExistsException;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.greensharpie.ms_homework.system.NotYetImplementedException;
 import com.greensharpie.ms_homework.system.SystemData;
 
-public class RenameFileTest {
+public class CopyTest {
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
+
     @Test
-    public void simpleRenameFile()
+    public void simpleCopyFile()
     {
         SystemData system_data = new SystemData();
         assertDoesNotThrow(() -> {
             new TouchFile("old_file").exec(system_data);
-            new RenameFile("old_file", "new_file").exec(system_data);
+            new WriteFile("old_file", "Old file contents").exec(system_data);
+            new Copy("old_file", "new_file").exec(system_data);
+            new ReadFile("new_file").exec(system_data);
         });
 
-        assertEquals(1, system_data.getCwd().getContents().size());
+        assertEquals(2, system_data.getCwd().getContents().size());
         assertNotNull(system_data.getCwd().getEntry("new_file"));
+        assertEquals("Old file contents", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -39,7 +53,7 @@ public class RenameFileTest {
                 new TouchFile(name).exec(system_data);
             }
         
-            new RenameFile("newFile1", "newFile2").exec(system_data);
+            new Copy("newFile1", "newFile2").exec(system_data);
         });
         assertTrue(exception.getMessage().contains("Directory already contains item named:"));
     }
@@ -49,20 +63,19 @@ public class RenameFileTest {
     {
         SystemData system_data = new SystemData();
         Exception exception = assertThrows(FileNotFoundException.class, () ->
-            new RenameFile("newfile1", "newfile2").exec(system_data));
-        assertTrue(exception.getMessage().contains("Could not find a file with name:"));
+            new Copy("newfile1", "newfile2").exec(system_data));
+        assertTrue(exception.getMessage().contains("Could not find an entry with name:"));
     }
 
     @Test
-    public void cannotRenameDirectory()
+    public void cannotCopyDirectory()
     {
-        // Although lets be honest this should actually be fine.
         SystemData system_data = new SystemData();
         
-        Exception exception = assertThrows(FileNotFoundException.class, () -> {
+        Exception exception = assertThrows(NotYetImplementedException.class, () -> {
             new MakeDirectory("old_file").exec(system_data);
-            new RenameFile("old_file", "newFile2").exec(system_data);
+            new Copy("old_file", "newFile2").exec(system_data);
         });
-        assertTrue(exception.getMessage().contains("Could not find a file with name:"));
-    }
+        assertTrue(exception.getMessage().contains("Directory copy is not yet implemented"));
+    }    
 }
