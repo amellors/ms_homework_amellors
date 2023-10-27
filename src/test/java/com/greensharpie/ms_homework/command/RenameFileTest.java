@@ -1,10 +1,10 @@
 package com.greensharpie.ms_homework.command;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -28,13 +28,10 @@ public class RenameFileTest {
     public void simpleRenameFile()
     {
         SystemData system_data = new SystemData();
-        try {
+        assertDoesNotThrow(() -> {
             new TouchFile("old_file").exec(system_data);
             new RenameFile("old_file", "new_file").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         assertEquals(1, system_data.getCwd().getContents().size());
         assertNotNull(system_data.getCwd().getEntry("new_file"));
@@ -47,14 +44,11 @@ public class RenameFileTest {
 
         String[] dirNames = {"newFile1", "newFile2", "newFile3", "newFile4"};
 
-        try {
+        assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new TouchFile(name).exec(system_data);
             }
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
         
         Exception exception = assertThrows(FileAlreadyExistsException.class, () ->
             new RenameFile("newFile1", "newFile2").exec(system_data));

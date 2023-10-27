@@ -1,9 +1,9 @@
 package com.greensharpie.ms_homework.command;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.nio.file.FileAlreadyExistsException;
 
@@ -18,12 +18,9 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        try {
+        assertDoesNotThrow(() -> {
             new TouchFile("new_file").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         assertEquals(1, system_data.getCwd().getContents().size());
     }
@@ -35,14 +32,11 @@ public class TouchFileTest {
 
         String[] dirNames = {"newFile1", "newFile2", "newFile3", "newFile4"};
 
-        try {
+        assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new TouchFile(name).exec(system_data);
             }
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         assertEquals(dirNames.length, system_data.getCwd().getContents().size());
     }
@@ -52,13 +46,9 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        try {
+        assertDoesNotThrow(() -> {
             new TouchFile("new_file").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
-
+        });
         assertEquals(1, system_data.getCwd().getContents().size());
 
         Exception exception = assertThrows(FileAlreadyExistsException.class, () ->
@@ -73,24 +63,16 @@ public class TouchFileTest {
     {
         SystemData system_data = new SystemData();
 
-        try {
+        assertDoesNotThrow(() -> {
             new TouchFile("new_file").exec(system_data);
             new MakeDirectory("dir1").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
 
-        assertEquals(2, system_data.getCwd().getContents().size());
+            assertEquals(2, system_data.getCwd().getContents().size());
 
-        try {
             new ChangeDirectory("dir1").exec(system_data);
             new TouchFile("new_file").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
 
-        assertEquals(1, system_data.getCwd().getContents().size());
+            assertEquals(1, system_data.getCwd().getContents().size());
+        });
     }    
 }

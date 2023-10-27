@@ -1,7 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -34,15 +34,11 @@ public class ListContentsTest {
     {
         SystemData system_data = new SystemData();
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-        try {
+        assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
-
+        });
         new ListContents().exec(system_data);
 
         assertEquals("newDir1, newDir2, newDir3, newDir4", outputStreamCaptor.toString().trim());
@@ -52,13 +48,10 @@ public class ListContentsTest {
     public void oneDirList()
     {
         SystemData system_data = new SystemData();
-        try {
+        assertDoesNotThrow(() -> {
             new MakeDirectory("new_directory").exec(system_data);
             new ListContents().exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         assertEquals("new_directory", outputStreamCaptor.toString().trim());
     }
@@ -68,7 +61,7 @@ public class ListContentsTest {
     {
         SystemData system_data = new SystemData();
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-        try {
+        assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
@@ -76,10 +69,7 @@ public class ListContentsTest {
             for (String name: fileNames) {
                 new TouchFile(name).exec(system_data);
             }
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         new ListContents().exec(system_data);
 

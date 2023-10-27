@@ -1,7 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -34,14 +34,11 @@ public class PrintWorkingDirectoryTest {
     {
         SystemData system_data = new SystemData();
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-        try {
+        assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
         new PrintWorkingDirectory().exec(system_data);
 
         assertEquals("/", outputStreamCaptor.toString().trim());
@@ -53,14 +50,11 @@ public class PrintWorkingDirectoryTest {
         SystemData system_data = new SystemData();
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
         
-        try {
+        assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
         new ChangeDirectory("newDir3").exec(system_data);
         new PrintWorkingDirectory().exec(system_data);
 
@@ -72,7 +66,7 @@ public class PrintWorkingDirectoryTest {
     {
         SystemData system_data = new SystemData();
         String[] dirNames = {"newDir1", "newDir2", "newDir3", "newDir4"};
-        try {
+        assertDoesNotThrow(() -> {
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
@@ -80,10 +74,7 @@ public class PrintWorkingDirectoryTest {
             for (String name: dirNames) {
                 new MakeDirectory(name).exec(system_data);
             }
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
         new ChangeDirectory("newDir2").exec(system_data);
         new PrintWorkingDirectory().exec(system_data);
 

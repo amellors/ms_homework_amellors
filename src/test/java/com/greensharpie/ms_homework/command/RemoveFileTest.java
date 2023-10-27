@@ -1,9 +1,9 @@
 package com.greensharpie.ms_homework.command;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -27,15 +27,12 @@ public class RemoveFileTest {
     public void rmFileTest()
     {
         SystemData system_data = new SystemData();
-        try {
+        assertDoesNotThrow(() -> {
             new MakeDirectory("new_directory").exec(system_data);
             new TouchFile("new_file").exec(system_data);
             new TouchFile("new_file2").exec(system_data);
             new RemoveFile("new_file").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
         Directory cwd = system_data.getCwd();
         
         assertEquals(2, cwd.getContents().size());
@@ -46,12 +43,9 @@ public class RemoveFileTest {
     {
         SystemData system_data = new SystemData();
 
-        try {
+        assertDoesNotThrow(() -> {
             new MakeDirectory("new_directory").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         Exception exception = assertThrows(FileNotFoundException.class, () ->
             new RemoveFile("new_directory").exec(system_data));

@@ -1,7 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -34,12 +34,9 @@ public class FindTest {
     public void directoryItem()
     {
         SystemData system_data = new SystemData();
-        try {
+        assertDoesNotThrow(() -> {
             new MakeDirectory("newDir").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
         new Find("newDir").exec(system_data);
         
 
@@ -50,13 +47,10 @@ public class FindTest {
     public void fileItem()
     {
         SystemData system_data = new SystemData();
-        try {
+        assertDoesNotThrow(() -> {
             new TouchFile("newFile").exec(system_data);
             new Find("newFile").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         assertEquals("Found a File with name newFile", outputStreamCaptor.toString().trim());
     }
@@ -78,13 +72,10 @@ public class FindTest {
     {
         SystemData system_data = new SystemData();
 
-        try {
+        assertDoesNotThrow(() -> {
             new MakeDirectory("newDir").exec(system_data);
             new Find("newDir", true).exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         assertEquals("Found a Directory with name newDir", outputStreamCaptor.toString().trim());
     }
@@ -94,13 +85,10 @@ public class FindTest {
     {
         SystemData system_data = new SystemData();
 
-        try{
+        assertDoesNotThrow(() -> {
             new TouchFile("newFile").exec(system_data);
             new Find("newFile", true).exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
+        });
 
         assertEquals("Found a File with name newFile", outputStreamCaptor.toString().trim());
     }
@@ -111,7 +99,7 @@ public class FindTest {
         SystemData system_data = new SystemData();
         Directory root = system_data.getCwd();
 
-        try {
+        assertDoesNotThrow(() -> {
             new MakeDirectory("newDir").exec(system_data);
             new ChangeDirectory("newDir").exec(system_data);
             new MakeDirectory("newDir2").exec(system_data);
@@ -120,14 +108,10 @@ public class FindTest {
             new MakeDirectory("newDir3").exec(system_data);
             new ChangeDirectory("newDir3").exec(system_data);
             new TouchFile("newFile").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
-        system_data.setCwd(root);
 
-
-        new Find("newFile", true).exec(system_data);
+            system_data.setCwd(root);
+            new Find("newFile", true).exec(system_data);
+        });
 
         assertEquals("Found a File with name newDir/newDir2/newFile\nFound a File with name newDir/newDir2/newDir3/newFile", outputStreamCaptor.toString().trim());
     }
