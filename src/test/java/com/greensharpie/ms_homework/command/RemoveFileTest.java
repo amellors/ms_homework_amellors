@@ -1,9 +1,12 @@
 package com.greensharpie.ms_homework.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +24,7 @@ public class RemoveFileTest {
     }
 
     @Test
-    public void rmDirTest()
+    public void rmFileTest()
     {
         SystemData system_data = new SystemData();
         try {
@@ -45,27 +48,23 @@ public class RemoveFileTest {
 
         try {
             new MakeDirectory("new_directory").exec(system_data);
-            new RemoveFile("new_directory").exec(system_data);
         }
         catch (Exception e) {
             fail("Shouldn't be trowing an exception");
         }
 
-        assertEquals("Could not find file with name: new_directory", outputStreamCaptor.toString().trim());
+        Exception exception = assertThrows(FileNotFoundException.class, () ->
+            new RemoveFile("new_directory").exec(system_data));
+        assertTrue(exception.getMessage().contains("Could not find file with name:"));
     }
 
     @Test
-    public void rmDirNameNotFound()
+    public void rmFileNotFound()
     {
         SystemData system_data = new SystemData();
 
-        try {
-            new RemoveFile("non_existing_file").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
-
-        assertEquals("Could not find file with name: non_existing_file", outputStreamCaptor.toString().trim());
+        Exception exception = assertThrows(FileNotFoundException.class, () ->
+            new RemoveFile("non_existing_file").exec(system_data));
+        assertTrue(exception.getMessage().contains("Could not find file with name:"));
     }
 }

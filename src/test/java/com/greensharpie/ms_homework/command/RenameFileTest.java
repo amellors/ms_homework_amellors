@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.nio.file.FileAlreadyExistsException;
 
@@ -64,14 +65,9 @@ public class RenameFileTest {
     public void fileDoesNotExist()
     {
         SystemData system_data = new SystemData();
-        try {
-            new RenameFile("newFile1", "newFile2").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
-
-        assertEquals("Could not find a file with name: newFile1", outputStreamCaptor.toString().trim());
+        Exception exception = assertThrows(FileNotFoundException.class, () ->
+            new RenameFile("newfile1", "newfile2").exec(system_data));
+        assertTrue(exception.getMessage().contains("Could not find a file with name:"));
     }
 
     @Test
@@ -79,14 +75,11 @@ public class RenameFileTest {
     {
         // Although lets be honest this should actually be fine.
         SystemData system_data = new SystemData();
-        try {
+        
+        Exception exception = assertThrows(FileNotFoundException.class, () -> {
             new MakeDirectory("old_file").exec(system_data);
             new RenameFile("old_file", "newFile2").exec(system_data);
-        }
-        catch (Exception e) {
-            fail("Shouldn't be trowing an exception");
-        }
-
-        assertEquals("Could not find a file with name: old_file", outputStreamCaptor.toString().trim());
+        });
+        assertTrue(exception.getMessage().contains("Could not find a file with name:"));
     }
 }
