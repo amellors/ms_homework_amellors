@@ -1,5 +1,8 @@
 package com.greensharpie.ms_homework.command;
 
+import java.io.FileNotFoundException;
+import java.nio.file.FileAlreadyExistsException;
+
 import com.greensharpie.ms_homework.filesystem.Directory;
 import com.greensharpie.ms_homework.filesystem.DirectoryEntry;
 import com.greensharpie.ms_homework.filesystem.File;
@@ -14,7 +17,7 @@ public class ReadFile {
         this.filename = filename;
     } 
 
-    public void exec(SystemData system) {
+    public void exec(SystemData system) throws FileNotFoundException {
         Directory cwd = system.getCwd();
 
         DirectoryEntry entry = cwd.getEntry(filename);
@@ -22,7 +25,7 @@ public class ReadFile {
             System.out.println(((File)entry).getContents());    
         }
         else {
-            System.out.println("Could not find a file with name: " + filename);
+            throw new FileNotFoundException("Could not find a file with name: " + filename);
         }
     }    
 }

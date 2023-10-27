@@ -42,7 +42,12 @@ public class RemoveDirectoryTest {
     {
         SystemData system_data = new SystemData();
 
-        new RemoveDirectory("non_existing_dir").exec(system_data);
+        try {
+            new RemoveDirectory("non_existing_dir").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Could not find directory with name: non_existing_dir", outputStreamCaptor.toString().trim());
     }

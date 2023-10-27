@@ -1,5 +1,6 @@
 package com.greensharpie.ms_homework.command;
 
+import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 
 import com.greensharpie.ms_homework.filesystem.Directory;
@@ -18,7 +19,7 @@ public class RenameFile {
         this.newName = newName;
     } 
 
-    public void exec(SystemData system) throws FileAlreadyExistsException {
+    public void exec(SystemData system) throws FileAlreadyExistsException, FileNotFoundException {
         Directory cwd = system.getCwd();
 
         DirectoryEntry entry = cwd.getEntry(oldName);
@@ -33,7 +34,7 @@ public class RenameFile {
             }
         }
         else {
-            System.out.println("Could not find a file with name: " + oldName);
+            throw new FileNotFoundException("Could not find a file with name: " + oldName);
         }
     }    
 }

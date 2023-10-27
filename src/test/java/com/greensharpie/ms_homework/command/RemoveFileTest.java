@@ -59,7 +59,12 @@ public class RemoveFileTest {
     {
         SystemData system_data = new SystemData();
 
-        new RemoveFile("non_existing_file").exec(system_data);
+        try {
+            new RemoveFile("non_existing_file").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Could not find file with name: non_existing_file", outputStreamCaptor.toString().trim());
     }

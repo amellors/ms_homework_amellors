@@ -31,7 +31,8 @@ Ideas I wanted/did implement beyond the scope of the initial requirements:
 - [ ] REPL like interface to interact with filesystem
 - [ ] Pushd & Popd
 - [ ] Move & Copy
-- [ ] Exceptions instead of logs to console for issues
+- [X] Exceptions instead of logs to console for issues
+** As I was going through this exercise I wasn't sure that exceptions were the right thing to do in most of these cases since not finding a file might be ok in some cases, but others it would be
 - [X] Recursive Find
 
 Notes:

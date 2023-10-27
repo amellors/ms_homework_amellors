@@ -1,5 +1,7 @@
 package com.greensharpie.ms_homework.command;
 
+import java.io.FileNotFoundException;
+
 import com.greensharpie.ms_homework.filesystem.Directory;
 import com.greensharpie.ms_homework.filesystem.DirectoryEntry;
 import com.greensharpie.ms_homework.system.SystemData;
@@ -13,7 +15,7 @@ public class RemoveDirectory {
         this.rmdirName = rmdirName;
     } 
 
-    public void exec(SystemData system) {
+    public void exec(SystemData system) throws FileNotFoundException {
         Directory cwd = system.getCwd();
         
         DirectoryEntry entry = cwd.getEntry(rmdirName);
@@ -21,7 +23,7 @@ public class RemoveDirectory {
             cwd.getContents().remove(entry);
         }
         else {
-            System.out.println("Could not find directory with name: " + rmdirName);
+            throw new FileNotFoundException("Could not find directory with name: " + rmdirName);
         }
     }    
 }

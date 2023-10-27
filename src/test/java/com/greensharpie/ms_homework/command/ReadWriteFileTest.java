@@ -23,12 +23,22 @@ public class ReadWriteFileTest {
     public void filenotFoundToRead()
     {
         SystemData system_data = new SystemData();
-        new ReadFile("file").exec(system_data);
+        try {
+           new ReadFile("file").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Could not find a file with name: file", outputStreamCaptor.toString().trim());
 
         outputStreamCaptor.reset();
-        new WriteFile("file", "Contents of file").exec(system_data);
+        try {
+            new WriteFile("file", "Contents of file").exec(system_data);
+        }
+        catch (Exception e) {
+            fail("Shouldn't be trowing an exception");
+        }
 
         assertEquals("Could not find a file with name: file", outputStreamCaptor.toString().trim());
     }
