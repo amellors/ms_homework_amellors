@@ -32,3 +32,4 @@ Ideas I wanted/did implement beyond the scope of the initial requirements:
 - [ ] Pushd & Popd
 - [ ] Move & Copy
 - [ ] Exceptions instead of logs to console for issues
+- [X] Recursive Find
